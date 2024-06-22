@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dados do Sensor DHT11</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>Dados do Sensor DHT11</h1>
+  <p>Temperatura: <span id="temperatura"></span>°C</p>
+  <p>Umidade: <span id="umidade"></span>%</p>
+
+  <script>
+    function atualizarDados() {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var dados = JSON.parse(this.responseText);
+          document.getElementById("temperatura").innerHTML = dados.temperatura;
+          document.getElementById("umidade").innerHTML = dados.umidade;
+        }
+      };
+      xmlhttp.open("GET", "http://192.168.0.117/dados", true);
+      xmlhttp.send();
+    }
+
+    setInterval(atualizarDados, 1000); // Atualiza os dados a cada segundo
+  </script>
+</body>
+</html>
